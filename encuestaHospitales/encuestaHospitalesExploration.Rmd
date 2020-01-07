@@ -1,0 +1,340 @@
+---
+title: "Encuesta Hospitales Tentative Questions"
+output:
+  word_document:
+    toc: yes
+    toc_depth: '1'
+  pdf_document:
+    number_sections: yes
+    toc: yes
+    toc_depth: 1
+date: "01/03/2020"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+setwd('/home/diego/baMod/code4vzlaHackathon/c4vHackathonFeb2019/encuestaHospitales')
+library(magrittr)
+library(readr)
+library(dplyr)
+enHospDf <- read_csv('dataset/Encuesta Nacional de Hospitales.csv')
+```
+
+
+
+# Group Variables by heuristics
+ The dataset is divided in 11 different sections:
+
+```{r, echo=FALSE,warning=FALSE,message=FALSE}
+# Section 0
+idData <- enHospDf[,0:6]
+
+# Section 1 General Operability 
+genOp <- enHospDf[,6:10]
+
+# Section 2 Especific Operability
+espOp <- enHospDf[,10:47]
+
+# Section 3 Dialysis Service
+dialServ <- enHospDf[,47:75]
+
+# Section 4 Nutrition Service
+nutriServ <- enHospDf[,75:83]
+
+# Section 5 Attention Quality
+attQual <- enHospDf[,83:85]
+
+# Section 6 Personnel Availability
+personelDisp <- enHospDf[,85:95]
+
+# Section 7 Public Services
+publicServ <- enHospDf[,95:107]
+
+# Section 8 Mortality Impact
+mortImpact <- enHospDf[,107:109]
+
+# Section 9 Violence and protests
+violence <- enHospDf[,109:117]
+
+# Section 10 Epidemy Emergency
+epiEmerg <- enHospDf[,118]
+
+enHospDf$`Semana reportada` <- as.factor(enHospDf$`Semana reportada`)
+
+
+# enHospDf %>%
+#   group_by(enHospDf$`Semana reportada`) %>% 
+#   summarise(opSum = sum(enHospDf$`5.- Número de camas arquitectónicas`))
+```
+
+
+1. ID Data
+2. General operability Var 5 to var 8
+3. Specific operability <br> - In this section the 3 questions are likert scales. Thus, the high number of columns 
+4. Dialysis Service
+5. Nutrition Service
+6. Attention Quality
+7. Personnel Availability
+8. Public Service
+9. Mortality Impact
+10. Violence and Protests
+11. Epidemiological Emergency
+
+# General Operability 
+
+## Questions: <br>
+This section portrays the most elemental hospital operativity.
+
+
+- What are the current conditions of each hospital in terms of its operative beds and pavilions?
+- How the original number of beds differ from the actual number of beds that are operative?
+- Which hospitals have the highest amount of operative beds and Pavilions? 
+- Which states have the highest/lowest amount of operative beds and Pavilions?
+- How operative beds vary by week?
+- How emergency beds vary by week?
+- How operative pavilions vary by week?
+<br><br> 
+
+
+
+# Specific Operability 
+No null values
+<br> 
+
+Pavilion and Emergencies
+
+
+## Equipment Questions (9.-)
+ 
+- What equipment lacks the most?
+- Which hospitals have the most scarce equipment?
+- Which hospitals have the most complete equipment?
+- How equipment operability varies by week?
+
+
+## Emergency Questions (10.-)
+
+
+- What medicines lack the most per week?
+- What medicines have the most availability per week?
+- Which hospitals have most scarcity of medicines?
+- Which hospitals have the most amount of medicines? 
+- What is the availability of medicines per hospital? (interactive viz)
+- What is the availability of medicines per state? 
+    - Revision of the score pending. 
+    - <i>In order to track demand of medicines as well</i>
+<br>
+
+## Pavilion Questions (11.-)
+
+- What supplies lack the most per week?
+- What supplies have the most availability per week?
+- Which hospitals have most scarcity of supplies?
+- Which hospitals have the most amount of supplies? 
+- What is the availability of supplies per hospital? (interactive viz)
+- What is the availability of supplies per state? 
+    - Revision of score pedning
+    - <i>In order to track demand of medicines as well</i>
+
+<br> 
+
+### Variables
+
+#### 9.- Equipment <br>
+- UTI: The UTI is the Intermediate Treatment Unit that has specialized personnel and equipment that allows patients who, after the critical stage, require constant surveillance, attention and observation, prior to transfer to a conventional room.
+- UTI(P): Definition Pending
+- Emergency: How much time has the ER been operative.
+- Pavilion: How much time have the Pavilions been operative.
+- Laboratory: How much time has the Laboratory been operative. 
+- Ecography: How much time has the ecography been operative. 
+- TAC/TMN: Axial Computarized Tomography [TAC], TMN To be defined. 
+- X Rays: How much time has the X-Ray equipment has been operative. 
+
+
+### 10.- Emergency <br>
+#### Medicines
+- Adrenalin:
+- Atropine:
+- Dopamine:
+- Cephalosporins / beta-lactams:
+- Aminoglycosides / quinolones:
+- Vancomycin / Clindamycin:
+- Local anesthesia (lidocaine:
+- Minor analgesic (NSAIDs, dipyrone, etc.:
+- Major analgesic (morphine, demerol:
+- Fluidotherapics (0.9%, Gluc 5%,) / infusion equipment:
+- Diazepam / DPH:
+- Heparin:
+- Steroids:
+- Insulin:
+- Med inhaled for asthma:
+- Antihypertensive:
+
+#### Equipment
+- Defibrillator:
+- TOT / intubation:
+- Yelco / central roads:
+
+### 11. -  Pavilion
+
+#### Supplies
+- Oxygen / suction:
+- Minor analgesics:
+- Major analgesics:
+- Anesthetic gases:
+- EV anesthetics:
+- Relajantes:
+- TOT / intubation equipment:
+- Patient lingerie kit:
+- Disposable health personnel (cap, gloves, gown:
+- Oxygen / suction:
+
+
+# Dialysis Service 
+<br> 
+<i> Note: Hospitals without Dialysis service are not included in the analysis. These hospitals were not built with a dialysis unit.<i>  
+<br>
+
+## Overall Dialysis Service
+
+- How many hospitals count with a dialysis service?
+- How many hospitals don't count with a dialysis service? 
+
+<br>
+
+## Non-Operative Dialysis Service
+
+- How many hospitals have a dialysis service that is not operative?
+- Why these hospitals dialysis service is not operative? 
+- What is the name/location of these hospitals that don't have operative dialysis.
+- How dialysis operability varied across time? (per week)
+
+<br>
+
+## Operative Dialysis Service
+
+<i> Note: Peritoneal and Hemodialysis are focused on the hospitals that provide them rather than the number of patients that each hospital attend. The reasoning behind this is to clearly communicate the overall state of dialysis services in Venezuela.   
+<br> 
+
+- Overall Dialysis Service:
+    - How many and which hospitals have an operative dialysis service?
+    - What is the total average number of hemodialysis and peritoneal dialysis patients by hospital?
+    - How dialysis the number of dialysis patients varied across time? 
+        - <i> This question is designed to inspect the patient service trend across time <i>
+- Peritoneal Dialysis
+    - What is the number of hospitals that have peritoneal dialysis out of the total?
+    - What are the reasons why hospitals don't provide peritoneal dialysis?
+    - Which hospitals don't provide peritoneal dialysis?
+    - How dialysis the number of dialysis patients varied across time? 
+        - <i> This question is designed to inspect the patient service trend across time <i> 
+- Hemodialysis
+    - What is the number of hospitals that have peritoneal dialysis out of the total? 
+    - What is the overall percentage of acute and chronic hemodialysis patients? 
+    - How dialysis the number of dialysis patients varied across time? 
+        - <i> This question is designed to inspect the patient service trend across time <i>
+
+<br> 
+
+## Dialysis Materials Availability
+
+- Questions: 
+    - What are the materials that lack the most?
+    - What are the most available materials?
+    - Which hospitals have most scarcity of materials?
+    - Which hospitals have the most availability of materials? 
+    - What is the availability of materials per hospital? (interactive viz)
+    - What is the availability of materials per state? 
+        - <i>In order to track demand of medicines as well</i>
+    - How many and which hospitals have an operative inverse osmosis plant?
+<br>
+
+
+## Dialysis Personnel Availability
+
+- Questions: 
+    - What type of personnel lacks the most? 
+    - What type of personnel has the most availability?
+    - Which hospitals have the most lack & availability of dialysis personnel?
+    - Which states have the most lack & availability of dialysis personnel?
+    - What is the average number of days that each type of personnel is missing by hospital and by state?
+    - How Dialysis personnel varied across time?
+
+
+    
+# Nutrition Service
+- Overall Nutrition Service
+    - How many hospitals out of the total count with nutrition service?
+    - From these hospitals, how many don't have an operative nutrition service?
+    - From these hospitals, what is the most frequent reason that the nutrition service is not operative? 
+    - Which hospitals have a nutrition service that is not operative in the last week?  
+    - What is the average operability of the nutrition service across time?
+- Meals Frequency: 
+    - How frequent are the daily meals overall in terms of time?
+    - Which hospitals don't count with a nutrition service in the last week? 
+    - Which hospitals have a low frequency of daily meals?
+- Meals quality: 
+    - What is the quality of nutrition service across time? 
+    - What is the quality of nutrition service of all hospitals in the last week? 
+    - Which have the lowest quality of nutrition service in the last week? 
+- Baby Milk Formulas: 
+    - What is the availability of baby formulas across time?
+    - Which states have the lowest availability of baby formulas in the past week?
+    - Which hospitals have the lowest/highest frequency of baby formulas in the past week? 
+        - In order to pinpoint the hospitals are more in need of baby formulas.
+        
+# Public Service
+
+## Water Service
+- How water service varied in UTI, Pavilion, and Emergency across time?
+- Which hospitals lacked water service in the last week?
+    - In which area did they lack water service?
+<br>
+
+## Outages
+    
+- What is the percentage of power outages frequency across time?
+- What is the average power outages frequency per hospital?
+- What is the average power outages frequency per state?
+- Which hospitals had the highest number of power outages in the last week? 
+- What is the average number of power outages per hospital / per state?
+    - From these power outages,which equipment equipment has broken?
+- Which hospitals/states are in most need of power plants?
+    - Most malfunctioning power plants
+    - At least 1 death due to power outages.
+- In which hospitals patients have died due to power outages? 
+    - How many?
+    
+    
+# Mortality Impact
+
+
+- How many cardiovascular deaths per state/hospitals happened due to institutional failures?
+    - From these, which are the most common institutional failures?
+- How many trauma deaths per state/hospitals happened due to institutional failures?
+    - From these, which are the most common institutional failures?
+- How mortality due to institutional failures varied across time?
+- In the last week how many deaths due to institutional failures occurred?
+    - From which states
+    - From which hospitals
+    - Cardiovascular vs trauma
+
+    
+    
+# Violence and Protests
+
+- How many protests have occurred across time?
+- Where these protests occurred?
+- From these protests, how many were done by medical personnel, nurses, other health professionals, and others?
+- How many protests have occurred per state?
+- Which are the most common violence against protesters overall and per state?
+
+
+# Epidemic Emergencies
+
+- What is the number of deaths per disease across time?
+- Where these deaths occurred?
+- What is the frequency/type/location of each disease in the last week?
